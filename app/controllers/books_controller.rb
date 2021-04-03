@@ -6,6 +6,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @favorite = Favorite.new
+    @book_comment = BookComment.new
   end
 
   def index
@@ -32,9 +33,6 @@ class BooksController < ApplicationController
       redirect_to books_path
     end
   end
-
-
-
 
 
   def update
