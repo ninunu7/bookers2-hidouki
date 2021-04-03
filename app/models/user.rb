@@ -9,4 +9,9 @@ class User < ApplicationRecord
 
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
   validates :introduction, length: {maximum: 50}
+
+  #ユーザーが投稿に対して既にいいねしているか
+  def already_liked?(book)
+    favorites.exists?(book_id: book.id)
+  end
 end
