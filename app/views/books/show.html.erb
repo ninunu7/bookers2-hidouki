@@ -46,7 +46,7 @@
         <div>
         <table>
   		    <tr>
-            <td><%= attachment_image_tag(@book.user, :profile_image, :fill, 40, 40, fallback: "no-image-icon.jpg") %></td>
+            <td><%= attachment_image_tag(book_comment.user, :profile_image, :fill, 40, 40, fallback: "no-image-icon.jpg") %></td>
             <%= book_comment.user.name %>
             <td><%= book_comment.comment %></td>
               <% if current_user.id == book_comment.user.id %>
