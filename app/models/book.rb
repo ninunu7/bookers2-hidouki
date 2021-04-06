@@ -21,7 +21,7 @@ class Book < ApplicationRecord
 		elsif search == "perfect_match"
 	                  @book = Book.where("#{word}")
 		elsif search == "partial_match"
-                  @book = Book.where("title LIKE?","%#{word}%")
+                  @book = Book.where("title LIKE?","%#{@word}%")
 		end
 	end
 end
