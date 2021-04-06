@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_many :favorite_books, through: :favorites, source: :user
 
 
-
   # foreign_key（FK）には、@user.xxxとした際に「@user.idがfollower_idなのかfollowed_idなのか」を指定します。
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   # @user.booksのように、@user.yyyで、
@@ -23,8 +22,6 @@ class User < ApplicationRecord
   has_many :follower_user, through: :followed, source: :follower
 
 
-
-
   attachment :profile_image, destroy: false
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
   validates :introduction, length: {maximum: 50}
@@ -33,18 +30,31 @@ class User < ApplicationRecord
     favorites.exists?(book_id: book.id)
   end
 
-  # ユーザーをフォローする
-def follow(user_id)
-  follower.create(followed_id: user_id)
-end
+    # ユーザーをフォローする
+  def follow(user_id)
+    follower.create(followed_id: user_id)
+  end
 
-# ユーザーのフォローを外す
-def unfollow(user_id)
-  follower.find_by(followed_id: user_id).destroy
-end
-
-# フォローしていればtrueを返す
-def following?(user)
-  following_user.include?(user)
-end
+  # ユーザーのフォローを外す
+  def unfollow(user_id)
+    follower.find_by(followed_id: user_id).destroy
+  end
+  def self.search(search,word)
+    case search
+      when 'forward_match'
+         @user = User.where("name LIKE?","#{word}%")
+      when "backward_match"
+         @user = User.where("name LIKE?","%#{word}")
+      when "perfect_match"
+         @user = User.where("#{word}")
+      when "partial_match"
+         @user = User.where("name LIKE?","%#{word}%")
+      else
+         @user = User.all
+    end
+  end
+  # フォローしていればtrueを返す
+  def following?(user)
+    following_user.include?(user)
+  end
 end
