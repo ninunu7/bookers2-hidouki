@@ -6,5 +6,4 @@ class Search < ApplicationRecord
       Book.all
     end
   end
-
 end
