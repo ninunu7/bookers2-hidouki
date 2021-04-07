@@ -1,11 +1,19 @@
 class BookCommentsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
-    @book_comment = current_user.book_comments.new(book_comment_params)
-    @book_comment.book_id = @book.id
-    @book_comment.save
-    redirect_to book_path(@book)
+    book_comment = BookComment.create(book_comment_params)
+    redirect_to book_path(book_comment.book.id)
+    @book_comment = BookComment.new
+    @book_comments = @book.comments.includes(:user)
+    if @book_comment.save
+    respond_to do |format|
+      format.json
+    end
+    else
+    render book_path(@book_comment.book.id)
+    end
   end
+
 
 
 

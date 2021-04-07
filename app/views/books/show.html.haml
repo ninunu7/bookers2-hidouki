@@ -1,0 +1,17 @@
+- if current_user
+  = form_with(model: [@product, @comment], local: true, id: "new_comment") do |f|
+    = f.text_area :text, placeholder: "コメントする", class: "product__topContent__commentBox__text"
+    .product__topContent__commentBox__caution
+      相手のことを考え丁寧なコメントを心がけましょう。
+      %br
+      不快な言葉遣いなどは利用制限や退会処分となることがあります。
+    = button_tag type: "submit", class: "product__topContent__commentBox__submit" do
+      %i.fa.fa-comment
+      コメントする
+- else
+  .product__topContent__commentBox__signin
+    %p コメントの投稿には、
+    = link_to "ログイン", new_user_session_path
+    または
+    = link_to "新規会員登録", new_user_registration_path
+    が必要です

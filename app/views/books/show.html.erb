@@ -29,7 +29,6 @@
             ♡<%= @book.favorites.count %>
           <% end %>
       <% end %>
-
           </td>
           <% if current_user.id == @user.id %>
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
@@ -40,7 +39,6 @@
           </td>
         </tr>
       </table>
-
       <div class="comments">
         <% @book.book_comments.each do |book_comment| %>
         <div>
@@ -57,13 +55,10 @@
           </tr>
         </table>
       </div>
-      <div class="new-comment">
-        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
-          <%= f.text_area :comment,:size=>"60x4" %>
-          <%= f.submit "送信" %>
-        <% end %>
-      </div>
-
+    <%= form_with(model: [@book, @book_comment], local: true, id: "new_comment") do |f| %>
+      <%= f.text_area :comment, placeholder: "コメントする",:size=>"60x4" ,class: "product__topContent__commentBox__text"%>
+      <%= f.submit "送信" %>
+    <% end %>
     </div>
   </div>
 </div>
