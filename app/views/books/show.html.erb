@@ -55,10 +55,12 @@
           </tr>
         </table>
       </div>
-    <%= form_with(model: [@book, @book_comment], local: true, id: "new_comment") do |f| %>
+      <div class="comment">
+    <%= form_with(model: [@book, @book_comment], remote: true, id: "new_comment") do |f| %>
       <%= f.text_area :comment, placeholder: "コメントする",:size=>"60x4" ,class: "product__topContent__commentBox__text"%>
       <%= f.submit "送信" %>
     <% end %>
+    </div>
     </div>
   </div>
 </div>

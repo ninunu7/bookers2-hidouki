@@ -2,20 +2,14 @@ class BookCommentsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
     book_comment = BookComment.create(book_comment_params)
-    redirect_to book_path(book_comment.book.id)
-    @book_comment = BookComment.new
-    @book_comments = @book.comments.includes(:user)
+    @book_comment = current_user.book_comments.new(book_comment_params)
+    @book_comment.book_id = @book.id
+
     if @book_comment.save
-    respond_to do |format|
-      format.json
+      render :book_comments
     end
-    else
-    render book_path(@book_comment.book.id)
-    end
+
   end
-
-
-
 
   def destroy
     @book = Book.find(params[:id])
@@ -25,7 +19,6 @@ class BookCommentsController < ApplicationController
   end
 
   private
-
   def book_comment_params
     params.require(:book_comment).permit(:comment)
   end
