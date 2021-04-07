@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get 'home/about' => 'homes#about'
   get 'search/search' => 'search#search'
 
+  post '/books/:book_id/favorites' => "favorites#create"
+  delete '/books/:book_id/favorites' => "favorites#destroy"
+
   resources :users,only: [:show,:index,:edit,:update] do
     get 'follower' => 'relationships#follower'
     get 'followed' => 'relationships#followed'
